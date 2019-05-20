@@ -17,8 +17,7 @@
 \usepackage[francais]{babel}
 \usepackage{parskip}
 \usepackage{float}
-\usepackage{subcaption}
-\usepackage{subfig}
+
 
 \usepackage{enumitem}
 \newcommand{\hsp}{\hspace{20pt}}
@@ -307,12 +306,13 @@ includeheadfoot,
 
 
     \newpage
-    \section{Présentation du stage}                 %%% PRESENTATION STAGE %%%
+    \section{Contexte du stage}                 %%% PRESENTATION STAGE %%%
 
 
     \newpage
-    \section{Structures de données}                 %%% STRUCTURES DONNEES %%%
-    \subsection{Sparse Voxel Octree}
+    \section{Objet du stage}
+    \subsection{Structures de données}                 %%% STRUCTURES DONNEES %%%
+    \subsubsection{Sparse Voxel Octree}
 
     Le Sparse Voxel Octree (SVO) est une représentation de données en arbre. Sa structure permet d'accéder à une information rapidement.
     Il est construit à partir d'une scène 3D non structurée, qui est ensuite découpée en grille dont les cases contenant un élément sont à leur tour découpées jusqu'à atteindre le niveau défini.
@@ -335,7 +335,7 @@ includeheadfoot,
         }
     \end{figure}
 
-    \subsection{Sparse Voxel Directed Acyclic Graph}
+    \subsubsection{Sparse Voxel Directed Acyclic Graph}
 
     Le Sparse Voxel Directed Acyclic Graph (SVDAG) est un arbre de voxel compressé. Il peut être construit à partir d'un SVO.
     Sa particularité est qu'un noeud peut être pointé par plusieurs parents, évitant ainsi de stocker plusieurs noeuds s'ils sont identiques.
@@ -358,7 +358,7 @@ includeheadfoot,
         }
     \end{figure}
     \newpage
-    \subsection{Adaptive Mesh Refinement}
+    \subsubsection{Adaptive Mesh Refinement}
 
     L'Adaptive Mesh Refinement (AMR) est un arbre semblable au SVO, à la grande différence que les voxels peuvent se situer à des niveaux différents dans l'arbre.
     Ceci implique qu'une scène peut contenir des voxels plus grossiers que d'autres si un affinage n'est pas nécessaire.
@@ -384,9 +384,9 @@ includeheadfoot,
 
 
     \newpage
-    \section{Performance et analyse du SVDAG}
+    \subsection{Performance et analyse du SVDAG}
 
-    \subsection{Résultats}
+    \subsubsection{Résultats}
 
     \begin{figure}[H]
         \centering
@@ -437,13 +437,18 @@ includeheadfoot,
     \end{table}
 
     \newpage
-    \subsection{Analyse}
+    \subsubsection{Analyse}
 
-    Tout d'abord, les modèles sont ordonnés selon le nombre de triangles qui les composent. \\
-    Nous pouvons en premier lieu constater que la taille des modèles non-structurés ainsi que leurs temps de construction
-    en SVO dépendent du nombre de triangles. \\
+    Tout d'abord, les modèles sont ordonnés selon le nombre de triangles qui les composent.
+    Nous pouvons en premier lieu constater que la taille des modèles non-structurés dépend du nombre de triangles.
     Cependant, le nombre de voxels obtenus, quant à lui, dépend du volume du modèle dans le cube.
     Par exemple, la boule de poil est sphérique et "pleine" tandis que Lucy est un modèle creux et haut, rendant une grosse partie du cube vide.
+
+    Concernant le SVO, sa taille dépend du nombre de voxels, tandis que son temps de construction dépend du nombre de triangles.\\
+    La taille et le temps de construction du SVDAG sont liés au nombre de voxels. De plus, sa taille dépend également de la régularité des modèles.
+    Dans notre cas, les modèles sont tous autant réguliers car la couleur est distribuée avec le même procédé.
+
+    La structure du SVDAG est environ 10 fois moins volumineuse que le SVO, et les grandeurs 85\% plus légères. Ce qui donne un taux de compression total d'environ 86\%;
 
     \newpage
     \section{Collaboration et contribution}
