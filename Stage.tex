@@ -35,6 +35,7 @@ includeheadfoot,
 \author{Antoine Roche}
 \title{Rapport de Stage}
 
+\setlength{\parindent}{2em}
 \begin{document}
 
     \begin{titlepage}                                    %%% PAGE DE GARDE %%%
@@ -385,6 +386,8 @@ includeheadfoot,
     \newpage
     \section{Performance et analyse du SVDAG}
 
+    \subsection{Résultats}
+
     \begin{figure}[H]
         \centering
         \resizebox{160mm}{!}{\includegraphics[width=0.2\linewidth]{ressources/images/bunny.png}
@@ -433,7 +436,14 @@ includeheadfoot,
         \caption{Résultats avec des scènes voxélisées de résolution 1K$^{3}$}
     \end{table}
 
+    \newpage
+    \subsection{Analyse}
 
+    Tout d'abord, les modèles sont ordonnés selon le nombre de triangles qui les composent. \\
+    Nous pouvons en premier lieu constater que la taille des modèles non-structurés ainsi que leurs temps de construction
+    en SVO dépendent du nombre de triangles. \\
+    Cependant, le nombre de voxels obtenus, quant à lui, dépend du volume du modèle dans le cube.
+    Par exemple, la boule de poil est sphérique et "pleine" tandis que Lucy est un modèle creux et haut, rendant une grosse partie du cube vide.
 
     \newpage
     \section{Collaboration et contribution}
