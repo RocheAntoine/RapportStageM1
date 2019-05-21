@@ -111,10 +111,14 @@ includeheadfoot,
     Performance. Dans ce contexte, les équipes spécialisées en visualisation scientifique sont reconnues pour
     leur expertise en visualisation parallèle sur supercalculateur. Elles participent activement au développement de la
     bibliothèque open-source VTK, qui fournit un pipeline complet de visualisation associant différents types de données
-    et d’algorithmes. Pour répondre aux besoins de codes de simulation, le CEA a développé depuis quelques années des
+    et d’algorithmes.
+
+    Pour répondre aux besoins de codes de simulation, le CEA a développé depuis quelques années des
     structures de données et des filtres VTK dédiés à la visualisation et la manipulation de maillages AMR. D’autres
     structures hiérarchiques utilisées dans le cadre de l’industrie cinématographique ou du jeux-vidéo permettent un rendu
-    réaliste de type ray-tracing en temps réel en faisant appel à la programmation sur carte graphique (CUDA). Ces structures
+    réaliste de type ray-tracing en temps réel en faisant appel à la programmation sur carte graphique (CUDA).
+
+    Ces structures
     sont basées sur les Smart Voxel Octrees (SVO), une représentation d’une scène voxelisée de type octree optimisée.
     Des techniques de compressions offrent par la suite des gains substantiels en tenant compte des motifs similaires :
     les Smart Voxel Directed Acyclic Graph (SVDAG) ou encore les Symmetric SVDAG (SSVDAG).
@@ -336,7 +340,7 @@ includeheadfoot,
     évalués aussi bien sur GPU que sur les nombreux accélérateurs et processeurs disponibles au CEA.
 
     \newpage
-    \section{Objet du stage}
+    \section{Etudes menées}
     \subsection{Structures de données}                 %%% STRUCTURES DONNEES %%%
     \subsubsection{Sparse Voxel Octree}
 
@@ -505,11 +509,9 @@ includeheadfoot,
     \subsection{Collaboration et contribution}
 
     Afin de comprendre certaines choses sur le SVDAG, j'ai sollicité Dan Dolonius et Ulf Assarsson, deux chercheurs suédois à l'origine du SVDAG.
-    Malheureusement, aucune de mes questions n'a abouti à une réponse de leur part. Seules les solutions que je pouvais
-    apporter (le problème de compatibilité notamment) a suscité leur intérêt.\\
+    La collaboration n'a pas beaucoup abouti, j'ai cependant eu l'occasion des les renseigner sur la compatibilité vers Unix.\\
     De plus, le programme fourni est une ancienne version de ce qu'ils possèdent actuellement, et en avoir une plus récente
-    nous permettrait beaucoup plus de choses. Je leur ai donc envoyé un mail récemment, en espérant avoir une réponse
-    positive dans les prochains jours.
+    nous permettrait beaucoup plus de choses.
 
     Quant à VTK et à l'AMR, Jérôme Dubois et Jacques-Bernard Lekien, contributeurs à VTK, m'ont beaucoup expliqué
     le fonctionnement de la structure AMR et sa construction, me donnant de bonnes bases pour la suite.
@@ -520,15 +522,15 @@ includeheadfoot,
     \subsubsection{Installations}
 
     Tout d'abord, l'accès aux machines internes a pris du temps, ce qui a retardé les installations de quelques jours.
-    De plus, les restrictions de l'entreprises nous empêche d'utiliser curl et wget comme bon nous semble, il a donc fallu créer des miroirs.
-    Utiliser Roméo pour cela était la meilleure solution, malheureusement une coupure de courant au Moulin de la Housse survint au mauvais moment.
+    De plus, les restrictions de l'entreprises nous empêchent d'utiliser curl et wget comme bon nous semble, il a donc fallu créer des miroirs.
+    Utiliser Roméo pour cela était la meilleure solution. Cependant, une coupure de courant sur le campus survint au mauvais moment.
     La seule façon de faire était de télécharger les paquets un par un via un navigateur et de les placer dans un miroir.
 
     Concernant VTK, l'installateur télécharge des programmes de test, ce qui bloquait tout. Et les télécharger à la main n'était
     pas envisageable étant donné leur grand nombre. Nous avons donc attendu le retour de Roméo pour les télécharger puis les transférer en ssh.
     \\De plus, l'installation de VTK pour python est en option, ce que je ne savais pas, et les programmes d'exemples qui m'étaient
     donnés étaient en python. Après plusieurs heures de recherches sur l'importation de VTK (car je pensais toujours que VTK python était installé),
-    j'ai fini par restranscrir les exemples en C++, ce qui m'a permis au passage de comprendre les différentes étapes.
+    j'ai fini par restranscrire les exemples en C++, ce qui m'a permis au passage de comprendre les différentes étapes.
 
     \subsubsection{SVDAG}
 
@@ -539,6 +541,9 @@ includeheadfoot,
 
     \newpage
     \section{Travaux futurs}
+
+    Durant le reste du stage, mon travail consistera dans un premier temps à maitriser la structure VTK-AMR afin de faire un convertisseur AMR
+    vers SVDAG. Ensuite, des rendus seront faits à partir de données AMR afin d'évaluer les performances et les améliorations possibles.
 
     \newpage
     \section{Conclusion}                            %%% CONCLUSION %%%
