@@ -84,6 +84,11 @@ includeheadfoot,
         \end{sffamily}
     \end{titlepage}
 
+\newpage
+    \section*{Remerciements}
+
+    Je tiens à remercier Jérôme Dubois et Jacques-Bernard Lekien pour leur aide précieuse, ainsi que Michael Krajecki pour m'avoir donné l'opportunité de travailler au sein du CEA.
+
 
     \newpage
 
@@ -97,6 +102,25 @@ includeheadfoot,
     \lstset{numbers=left, tabsize=3, frame=single, numberstyle=\ttfamily,
     basicstyle=\footnotesize}
     \thispagestyle{empty}
+
+    \section{Introduction}                          %%% INTRODUCTION %%%
+
+
+
+    Le CEA, acteur majeur en matière de recherche et d’innovation, est considéré comme étant un expert du Calcul Haute
+    Performance. Dans ce contexte, les équipes spécialisées en visualisation scientifique sont reconnues pour
+    leur expertise en visualisation parallèle sur supercalculateur. Elles participent activement au développement de la
+    bibliothèque open-source VTK, qui fournit un pipeline complet de visualisation associant différents types de données
+    et d’algorithmes. Pour répondre aux besoins de codes de simulation, le CEA a développé depuis quelques années des
+    structures de données et des filtres VTK dédiés à la visualisation et la manipulation de maillages AMR. D’autres
+    structures hiérarchiques utilisées dans le cadre de l’industrie cinématographique ou du jeux-vidéo permettent un rendu
+    réaliste de type ray-tracing en temps réel en faisant appel à la programmation sur carte graphique (CUDA). Ces structures
+    sont basées sur les Smart Voxel Octrees (SVO), une représentation d’une scène voxelisée de type octree optimisée.
+    Des techniques de compressions offrent par la suite des gains substantiels en tenant compte des motifs similaires :
+    les Smart Voxel Directed Acyclic Graph (SVDAG) ou encore les Symmetric SVDAG (SSVDAG).
+    L’objectif du stage est de permettre l’évaluation de ces structures hiérarchiques pour la visualisation scientifique.
+
+    \newpage
 
     \section{Présentation CEA}                              %%% PRESENTATION CEA %%%
 
@@ -300,14 +324,16 @@ includeheadfoot,
     \newpage
 
 
-    \section{Introduction}                          %%% INTRODUCTION %%%
-
-    Le domaine de la visualisation, que ce soit dans le secteur scientifique ou multimédia, nécessite une qualité de rendu toujours plus grande.
-
-
     \newpage
     \section{Contexte du stage}                 %%% PRESENTATION STAGE %%%
 
+    En contact avec les équipes de recherche suédoises à la base du SVDAG, le stagiaire devra : \\1. Tout d’abord, étudier
+    et comprendre la théorie et l’implémentation des structures SVO/SVDAG/SSVDAG pour en évaluer les performances de
+    rendu ray-tracing dans un contexte maitrisé. \\2. Un premier convertisseur VTK-AMR vers SVDAG/SSVDAG sera à implémenter.
+    \\3. Le travail se poursuivra par l’application de rendu réaliste de type lancé de rayons à base de SVDAG sur ces données
+    issues de VTK-AMR. Plusieurs développements seront possibles en vue de prendre en compte la notion de variables ou de
+    compresser encore plus les informations dans le cadre de rendu de films interactifs. Les développements effectués seront
+    évalués aussi bien sur GPU que sur les nombreux accélérateurs et processeurs disponibles au CEA.
 
     \newpage
     \section{Objet du stage}
@@ -382,9 +408,34 @@ includeheadfoot,
         }
     \end{figure}
 
+\section{Travail réalisé}
 
-    \newpage
-    \subsection{Performance et analyse du SVDAG}
+    \subsection{Prises de connaissances}
+
+    La première semaine du stage fut dédiée à la connaissance et à la compréhension des structures de données citées plus haut.
+    Pour cela, j'ai lu plusieurs papiers de recherche, de manière plus ou moins appronfondie.
+
+    \subsection{Installation de l'environnement}
+
+    Plusieurs semaines ont ensuite été dédiées à l'installation de l'environnement nécessaire.
+    N'ayant pas les droits d'administrateur, j'ai installé Spack en tant que gestionnaire de paquets.\\
+    J'ai ensuite installé VTK, contenant des modules pour l'AMR, et le programme SVDAG fourni, ainsi que toutes les dépendences.
+
+    \subsection{Installation et fonctionnement du programme SVDAG}
+
+    Contrairement à tous les autres code sources, celui du SVDAG a été fait sur Windows. J'ai donc du résoudre les problèmes
+    de compatibilité, notamment causés par un paquet dépendant au système. \\
+    Le programme était maintenant fonctionnel, et le fichier d'entrée donné en exemple également.
+    Afin d'utiliser d'autres fichiers en entrée, j'ai du chercher et installer un constructeur de SVO. Je l'ai également
+    modifié de sorte à sortir les fichiers aux bons formats, pour qu'ils soient compatibles avec le SVDAG.
+    De l'autre côté, j'ai ajusté l'entrée du SVDAG. J'ai également ajouté une option permettant d'écrire le SVDAG sur
+    le disque pour ne pas avoir à le construire à chaque fois que l'on veut le visualiser.
+
+
+    \subsection{Analyse des performances du SVDAG}
+
+    Avec tout en place, j'ai pu tester le programme afin de comprendre comment il se comporte selon différents
+    paramètres. J'ai également analysé ses performances avec quelques jeux de données connus.
 
     \subsubsection{Résultats}
 
@@ -450,21 +501,47 @@ includeheadfoot,
 
     La structure du SVDAG est environ 10 fois moins volumineuse que le SVO, et les grandeurs 85\% plus légères. Ce qui donne un taux de compression total d'environ 86\%;
 
-    \newpage
-    \section{Collaboration et contribution}
+    \section{Expérience personnelle et professionnelle}
+    \subsection{Collaboration et contribution}
+
+    Afin de comprendre certaines choses sur le SVDAG, j'ai sollicité Dan Dolonius et Ulf Assarsson, deux chercheurs suédois à l'origine du SVDAG.
+    Malheureusement, aucune de mes questions n'a abouti à une réponse de leur part. Seules les solutions que je pouvais
+    apporter (le problème de compatibilité notamment) a suscité leur intérêt.\\
+    De plus, le programme fourni est une ancienne version de ce qu'ils possèdent actuellement, et en avoir une plus récente
+    nous permettrait beaucoup plus de choses. Je leur ai donc envoyé un mail récemment, en espérant avoir une réponse
+    positive dans les prochains jours.
+
+    Quant à VTK et à l'AMR, Jérôme Dubois et Jacques-Bernard Lekien, contributeurs à VTK, m'ont beaucoup expliqué
+    le fonctionnement de la structure AMR et sa construction, me donnant de bonnes bases pour la suite.
 
     \newpage
-    \section{Problèmes rencontrés}
+    \subsection{Problèmes rencontrés}
+
+    \subsubsection{Installations}
+
+    Tout d'abord, l'accès aux machines internes a pris du temps, ce qui a retardé les installations de quelques jours.
+    De plus, les restrictions de l'entreprises nous empêche d'utiliser curl et wget comme bon nous semble, il a donc fallu créer des miroirs.
+    Utiliser Roméo pour cela était la meilleure solution, malheureusement une coupure de courant au Moulin de la Housse survint au mauvais moment.
+    La seule façon de faire était de télécharger les paquets un par un via un navigateur et de les placer dans un miroir.
+
+    Concernant VTK, l'installateur télécharge des programmes de test, ce qui bloquait tout. Et les télécharger à la main n'était
+    pas envisageable étant donné leur grand nombre. Nous avons donc attendu le retour de Roméo pour les télécharger puis les transférer en ssh.
+    \\De plus, l'installation de VTK pour python est en option, ce que je ne savais pas, et les programmes d'exemples qui m'étaient
+    donnés étaient en python. Après plusieurs heures de recherches sur l'importation de VTK (car je pensais toujours que VTK python était installé),
+    j'ai fini par restranscrir les exemples en C++, ce qui m'a permis au passage de comprendre les différentes étapes.
+
+    \subsubsection{SVDAG}
+
+    Le problème de compatibilité expliqué plus haut m'a également pris beaucoup de temps. En effet, en plus du paquet dépendant au système,
+    l'appel d'une fonction template externe ne passait pas à la compilation. Les solutions sur internet liées à l'erreur
+    retournée ne parlant que de la fonction en elle-même et non de son appel, j'ai du en partie comprendre les types des
+    paramètres donnés (qui étaient des vecteurs très complexes) afin de trouver la source du problème.
 
     \newpage
     \section{Travaux futurs}
 
     \newpage
     \section{Conclusion}                            %%% CONCLUSION %%%
-
-    \newpage
-    \section{Remerciements}                         %%% REMERCIEMENTS %%%
-    Obligatoire dans le rapport
 
     \newpage
     \section{Glossaire}                             %%% GLOSSAIRE %%%
