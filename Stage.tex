@@ -17,9 +17,8 @@
 \usepackage[francais]{babel}
 \usepackage{parskip}
 \usepackage{float}
-
-
 \usepackage{enumitem}
+
 \newcommand{\hsp}{\hspace{20pt}}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
@@ -87,7 +86,9 @@ includeheadfoot,
 \newpage
     \section*{Remerciements}
 
-    Je tiens à remercier Jérôme Dubois et Jacques-Bernard Lekien pour leur aide précieuse, ainsi que Michael Krajecki pour m'avoir donné l'opportunité de travailler au sein du CEA.
+    Je tiens à remercier Jérôme Dubois et Jacques-Bernard Lekien pour leur aide précieuse, ainsi que l'occasion d'avoir participé
+    à la VISU2019 pour présenter mon travail et prendre connaissance de celui d'autres chercheurs dans le milieu de la visualisation.
+    Je remercie également Michael Krajecki pour m'avoir donné l'opportunité de travailler au sein du CEA.
 
 
     \newpage
@@ -119,9 +120,9 @@ includeheadfoot,
     réaliste de type ray-tracing en temps réel en faisant appel à la programmation sur carte graphique (CUDA).
 
     Ces structures
-    sont basées sur les Smart Voxel Octrees (SVO), une représentation d’une scène voxelisée de type octree optimisée.
+    sont basées sur les Sparse Voxel Octrees (SVO), une représentation d’une scène voxelisée de type octree optimisée.
     Des techniques de compressions offrent par la suite des gains substantiels en tenant compte des motifs similaires :
-    les Smart Voxel Directed Acyclic Graph (SVDAG) ou encore les Symmetric SVDAG (SSVDAG).
+    les Sparse Voxel Directed Acyclic Graph (SVDAG) ou encore les Symmetric SVDAG (SSVDAG).
     L’objectif du stage est de permettre l’évaluation de ces structures hiérarchiques pour la visualisation scientifique.
 
     \newpage
@@ -331,26 +332,49 @@ includeheadfoot,
     \newpage
     \section{Contexte du stage}                 %%% PRESENTATION STAGE %%%
 
-    En contact avec les équipes de recherche suédoises à la base du SVDAG, le stagiaire devra : \\1. Tout d’abord, étudier
-    et comprendre la théorie et l’implémentation des structures SVO/SVDAG/SSVDAG pour en évaluer les performances de
-    rendu ray-tracing dans un contexte maitrisé. \\2. Un premier convertisseur VTK-AMR vers SVDAG/SSVDAG sera à implémenter.
-    \\3. Le travail se poursuivra par l’application de rendu réaliste de type lancé de rayons à base de SVDAG sur ces données
-    issues de VTK-AMR. Plusieurs développements seront possibles en vue de prendre en compte la notion de variables ou de
+    Etant en collaboration directe avec l'équipe de visualisation du CEA, le but de mon stage est d'appliquer
+    des technologies du jeu vidéo sur de la visualisation scientifique. Plus précisement, mon objectif est de convertir
+    une structure VTK-AMR, technologie nouvelle dans le domaine de la visualisation scientifique permettant de réduire
+    le volume et le temps de rendu de données de simulations massives, vers une structure SVDAG, appliquée notamment pour
+    du raytracing sur des décors de jeux vidéo, qui permet de compresser un octree sans perte de données.
+
+    Ces deux technologies sont très puissantes dans leur domaine respectif. Elle peuvent permettre le rendu de scènes
+    très massives, initialement visualisable uniquement sur supercalculateur, sur des ordinateurs portables bon marché.
+
+    Afin de mener le projet jusqu'à son terme, je dois tout d'abord étudier et comprendre la théorie et l'implémentation des structures
+    SVO/SVDAG/SSVDAG pour en évaluer les performances de rendu raytracing sur des modèles connus. Pour cela, je suis en contact
+    avec les équipes de recherche suédoise à la base du SVDAG, avec lesquels je pourrai donc collaborer.
+
+    D'un autre côté, je dois comprendre et maitriser la construction de structure AMR via VTK. Je dois notamment
+    savoir construire un AMR à partir d'un SVO et avoir un résultat visuel identique au SVO en entrée.
+
+    Une fois les structures étudiées et maitrisées, un premier convertisseur VTK-AMR vers SVDAG/SSVDAG sera à
+    implémenter. Des tests de performances s'en suivront afin de les comparer avec celles des autres structures.
+
+    Pour finir, le travail se poursuivra par l'application de rendu réaliste de type lancé de rayons à base de SVDAG sur
+    des données issues de VTK-AMR. Plusieurs développements seront possibles en vue de prendre en compte la notion de variables ou de
     compresser encore plus les informations dans le cadre de rendu de films interactifs. Les développements effectués seront
-    évalués aussi bien sur GPU que sur les nombreux accélérateurs et processeurs disponibles au CEA.
+    évalués aussi bien sur GPU (CUDA) que sur les nombreux accélérateurs et processeurs disponibles au CEA.
 
     \newpage
-    \section{Etudes menées}
-    \subsection{Structures de données}                 %%% STRUCTURES DONNEES %%%
-    \subsubsection{Sparse Voxel Octree}
+    \section{Etudes menées}     %%% ETUDES MENEES %%%
 
-    Le Sparse Voxel Octree (SVO) est une représentation de données en arbre. Sa structure permet d'accéder à une information rapidement.
+    Dans le cadre du stage, des études préliminaires étaient nécessaires afin de comprendre les structures de données que
+    j'allais manipuler.
+
+    \subsection{Sparse Voxel Octree}
+
+    Le Sparse Voxel Octree (SVO) est la structure de base à connaître afin de comprendre les autres.
+    Pour cela, je me suis basé sur la thèse de Viktor Kämpe sur le SVDAG ainsi que le papier de recherche de NVIDIA
+    Research sur le ESVO, car ils introduisent le SVO de sorte à comprendre le reste.
+
+    Le SVO est une représentation de données en arbre. Sa structure permet d'accéder à une information rapidement.
     Il est construit à partir d'une scène 3D non structurée, qui est ensuite découpée en grille dont les cases contenant un élément sont à leur tour découpées jusqu'à atteindre le niveau défini.
     Chaque feuille du dernier niveau devient alors un voxel.
 
     \begin{figure}[H]
         \centering{
-        \resizebox{90mm}{!}{\input{ressources/inkscape/SVO1.pdf_tex} \space \space \input{ressources/inkscape/SVO2.pdf_tex}}
+        \resizebox{70mm}{!}{\input{ressources/inkscape/SVO1.pdf_tex} \space \space \input{ressources/inkscape/SVO2.pdf_tex}}
         \caption{Découpage d'une scène 2D avec 3 niveaux et représentation des "voxels" obtenus}
         \label{fig:svo1}
         }
@@ -359,15 +383,19 @@ includeheadfoot,
 
     \begin{figure}[H]
         \centering{
-        \resizebox{150mm}{!}{\input{ressources/inkscape/SVO3.pdf_tex}}
+        \resizebox{130mm}{!}{\input{ressources/inkscape/SVO3.pdf_tex}}
         \caption{Représentation de l'arbre construit}
         \label{fig:svo3}
         }
     \end{figure}
 
-    \subsubsection{Sparse Voxel Directed Acyclic Graph}
+    \subsection{Sparse Voxel Directed Acyclic Graph}
 
-    Le Sparse Voxel Directed Acyclic Graph (SVDAG) est un arbre de voxel compressé. Il peut être construit à partir d'un SVO.
+    Pour le Sparse Voxel Directed Acyclic Graph (SVDAG), j'ai de nouveau utilisé la thèse de Victor Kämpe ainsi que le papier
+    "High Resolution Sparse Voxel Dags" écrit par Victor Kämpe, Erik Sintorn et Ulf Assarsson. J'ai également étudié le
+    programme qu'ils ont partagé, muni d'un jeu de donnée en exemple.
+
+    Le SVDAG est un arbre de voxel compressé. Il peut être construit à partir d'un SVO.
     Sa particularité est qu'un noeud peut être pointé par plusieurs parents, évitant ainsi de stocker plusieurs noeuds s'ils sont identiques.
     Il est également acyclic, nous pouvons descendre dans l'arbre mais pas remonter. Cela offre un gain de stockage supplémentaire en ne spécifiant pas les parents des noeuds.
     Tout cela permet de faire tenir en mémoire des structures trop volumineuses à la base et de rendre les accès mémoires plus rapides.
@@ -388,9 +416,13 @@ includeheadfoot,
         }
     \end{figure}
     \newpage
-    \subsubsection{Adaptive Mesh Refinement}
+    \subsection{Adaptive Mesh Refinement}
 
-    L'Adaptive Mesh Refinement (AMR) est un arbre semblable au SVO, à la grande différence que les voxels peuvent se situer à des niveaux différents dans l'arbre.
+    Prendre connaissance de l'Adaptive Mesh Refinement (AMR) fut plus basé sur des explications venant de
+    Jérôme Dubois et Jacques-Bernard Lekien qui m'ont également fourni des programmes exemples. Je me suis tout de même
+    appuyé sur une présentation de Massimiliano Guarrasi, introduisant l'AMR et les outils associés.
+
+    L'AMR est un arbre semblable au SVO, à la grande différence que les voxels peuvent se situer à des niveaux différents dans l'arbre.
     Ceci implique qu'une scène peut contenir des voxels plus grossiers que d'autres si un affinage n'est pas nécessaire.
     En contrepartie, des zones peuvent être très détaillées sans allourdir la mémoire de façon excessive. \\
     De plus, il est aisé de diminuer le niveau maximal des voxels pour obtenir une scène moins détaillée
@@ -505,16 +537,41 @@ includeheadfoot,
 
     La structure du SVDAG est environ 10 fois moins volumineuse que le SVO, et les grandeurs 85\% plus légères. Ce qui donne un taux de compression total d'environ 86\%;
 
+    \subsection{Présentation des résultats}
+
+    Dans le cadre de plusieurs conférences, telles que la journée de visu 2019 et Eurographics 2019, il m'a été
+    demandé de faire une slide afin de montrer mon travail dans le domaine de la visualisation avec les premiers résultats obtenus.
+
+    \begin{figure}[H]
+        \centering{
+        \resizebox{100mm}{!}{\includegraphics{ressources/images/slide_visu.png}}
+        \label{slide_visu}
+        }
+    \end{figure}
+
     \section{Expérience personnelle et professionnelle}
     \subsection{Collaboration et contribution}
 
-    Afin de comprendre certaines choses sur le SVDAG, j'ai sollicité Dan Dolonius et Ulf Assarsson, deux chercheurs suédois à l'origine du SVDAG.
+    \subsubsection{Université de Chamblers}
+
+    Afin de comprendre certaines choses sur le SVDAG, j'ai sollicité Dan Dolonius et Ulf Assarsson, deux chercheurs de l'Université de Chamblers à l'origine du SVDAG.
     La collaboration n'a pas beaucoup abouti, j'ai cependant eu l'occasion des les renseigner sur la compatibilité vers Unix.\\
     De plus, le programme fourni est une ancienne version de ce qu'ils possèdent actuellement, et en avoir une plus récente
     nous permettrait beaucoup plus de choses.
 
+    \subsubsection{CEA}
+
     Quant à VTK et à l'AMR, Jérôme Dubois et Jacques-Bernard Lekien, contributeurs à VTK, m'ont beaucoup expliqué
     le fonctionnement de la structure AMR et sa construction, me donnant de bonnes bases pour la suite.
+
+    \subsubsection{Journée Visu2019}
+
+    A l'occasion de la journée de la visualisation 2019 se déroulant à Paris le 17 mai, j'ai pu présenter mon travail
+    aux personnes présentes en m'appuyant sur la slide produite. Cela a suscité l'intérêt de certains chercheurs,
+    demandant par exemple si mon travail pourrait être intégré à VTK.
+
+
+
 
     \newpage
     \subsection{Problèmes rencontrés}
@@ -522,7 +579,7 @@ includeheadfoot,
     \subsubsection{Installations}
 
     Tout d'abord, l'accès aux machines internes a pris du temps, ce qui a retardé les installations de quelques jours.
-    De plus, les restrictions de l'entreprises nous empêchent d'utiliser curl et wget comme bon nous semble, il a donc fallu créer des miroirs.
+    De plus, les restrictions de l'entreprises nous empêchant d'utiliser curl et wget comme bon nous semble, il a donc fallu créer des miroirs.
     Utiliser Roméo pour cela était la meilleure solution. Cependant, une coupure de courant sur le campus survint au mauvais moment.
     La seule façon de faire était de télécharger les paquets un par un via un navigateur et de les placer dans un miroir.
 
@@ -542,8 +599,10 @@ includeheadfoot,
     \newpage
     \section{Travaux futurs}
 
-    Durant le reste du stage, mon travail consistera dans un premier temps à maitriser la structure VTK-AMR afin de faire un convertisseur AMR
-    vers SVDAG. Ensuite, des rendus seront faits à partir de données AMR afin d'évaluer les performances et les améliorations possibles.
+    Durant le reste du stage, mon travail consistera dans un premier temps à prendre connaissance du SSVDAG, pour le
+    comparer avec le SVDAG et voir quel est le plus intéressant. Ensuite, je devrai maitriser la structure VTK-AMR en créant un
+    AMR à partir d'un SVO en obtenant le même résultat, pour par la suite faire un convertisseur AMR vers SVDAG/SSVDAG.
+    Ensuite, des rendus seront faits à partir de données AMR afin d'évaluer les performances et les améliorations possibles.
 
     \newpage
     \section{Conclusion}                            %%% CONCLUSION %%%
@@ -555,7 +614,9 @@ includeheadfoot,
 
     \newpage
     \section{Bibliographie}                         %%% BIBLIOGRAPHIE %%%
-    Obligatoire (il existe des solutions pour générer automatiquement les bib)
+
+    \bibliographystyle{plain}
+    \bibliography{biblio}\nocite{*}
 
 
 \end{document}
