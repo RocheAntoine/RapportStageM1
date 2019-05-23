@@ -30,6 +30,7 @@ colorlinks=true,
 breaklinks=false,
 urlcolor=blue,
 linkcolor=darkred,
+citecolor=blue,
 }
 
 \usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
@@ -71,7 +72,7 @@ includeheadfoot,
                 \textsc{\Large Rapport de stage Master 1}\\[1.5cm]
                 % Title
                 \HRule \\[1cm]
-                { \Large \bfseries Etude et évaluation de la structure de donnée SVDAG et ses variantes pour le RayTracing en visualisation scientifique \\[0.4cm] }
+                { \Large \bfseries Étude et évaluation de la structure de donnée SVDAG et ses variantes pour le RayTracing en visualisation scientifique \\[0.4cm] }
                 \HRule \\[2cm]
 
                 % Author and supervisor
@@ -96,9 +97,9 @@ includeheadfoot,
     \newpage
     \section*{Remerciements}
 
-    Je tiens à remercier le personnel du CEA, pour son aide et son accueil.\\
+    Je tiens à remercier le personnel du CEA, pour son aide et son accueil.
     Je remercie aussi Jérôme Dubois et Jacques-Bernard Lekien pour leur aide précieuse, ainsi que l'opportunité de participer
-    à la VISU2019 pour présenter mon travail et prendre connaissance de celui d'autres chercheurs dans le milieu de la visualisation.
+    à la Journée Visu 2019 pour présenter mon travail et prendre connaissance de celui d'autres chercheurs dans le milieu de la visualisation.
     Je remercie également Michael Krajecki pour m'avoir donné la chance de travailler au sein du CEA.
 
 
@@ -115,7 +116,8 @@ includeheadfoot,
     \textbf{SVDAG} : Sparse Voxel DAG \\
     \textbf{SSVDAG} : Symmetry-aware Sparse Voxel DAG \\
     \textbf{AMR} : Adaptive Mesh Refinement \\
-    \textbf{CEA} : Commissariat à l'Energie Atomique \\
+    \textbf{HTG} : HyperTreeGrid \\
+    \textbf{CEA} : Commissariat à l'Énergie Atomique et aux Énergies Alternatives\\
 
 
     \newpage
@@ -138,17 +140,17 @@ includeheadfoot,
     Le CEA, acteur majeur en matière de recherche et d’innovation, est considéré comme étant un expert du Calcul Haute
     Performance. Dans ce contexte, les équipes spécialisées en visualisation scientifique sont reconnues pour
     leur expertise en visualisation parallèle sur supercalculateur. Elles participent activement au développement de la
-    bibliothèque open-source VTK, qui fournit un pipeline complet de visualisation associant différents types de données
-    et d’algorithmes.
+    bibliothèque open-source Visualization ToolKit (VTK), qui fournit un pipeline complet de visualisation associant différents types de données
+    et algorithmes.
 
-    Pour répondre aux besoins de codes de simulation, le CEA a développé depuis quelques années des
-    structures de données et des filtres VTK dédiés à la visualisation et la manipulation de maillages AMR. D’autres
+    Pour répondre aux besoins des codes de simulation, le CEA a développé depuis quelques années des
+    structures de données et des filtres VTK dédiés à la visualisation et la manipulation de maillages Adaptive Mesh Refinement (AMR). D’autres
     structures hiérarchiques utilisées dans le cadre de l’industrie cinématographique ou du jeux-vidéo permettent un rendu
     réaliste de type ray-tracing en temps réel en faisant appel à la programmation sur carte graphique (CUDA).
 
     Ces structures
     sont basées sur les Sparse Voxel Octrees (SVO), une représentation d’une scène voxelisée de type octree optimisée.
-    Des techniques de compressions offrent par la suite des gains substantiels en tenant compte des motifs similaires :
+    Des techniques de compression offrent par la suite des gains substantiels en tenant compte des motifs similaires :
     les Sparse Voxel Directed Acyclic Graph (SVDAG) ou encore les Symmetric SVDAG (SSVDAG).
     L’objectif du stage est de permettre l’évaluation de ces structures hiérarchiques pour la visualisation scientifique.
 
@@ -359,32 +361,30 @@ includeheadfoot,
     \newpage
     \section{Contexte du stage}                 %%% PRESENTATION STAGE %%%
 
-    Etant en collaboration directe avec l'équipe de visualisation du CEA, le but de mon stage est d'appliquer
+    Étant en collaboration directe avec l'équipe de visualisation du CEA, le but de mon stage est d'appliquer
     des technologies du jeu vidéo sur de la visualisation scientifique. Plus précisement, mon objectif est de convertir
-    une structure VTK-AMR, technologie nouvelle dans le domaine de la visualisation scientifique permettant de réduire
-    le volume et le temps de rendu de données de simulations massives, vers une structure SVDAG, appliquée notamment pour
-    du raytracing sur des décors de jeux vidéo, qui permet de compresser un octree sans perte de données.
-
-    Ces deux technologies sont très puissantes dans leur domaine respectif. Elle peuvent permettre le rendu de scènes
-    très massives, initialement visualisable uniquement sur supercalculateur, sur des ordinateurs portables bon marché.
+    une structure HTG, technologie nouvelle dans VTK vers une structure SVDAG.
+    Un HTG permet de réduire le volume et le temps de rendu de données de simulations massives. Le SVDAG, quant à lui, est notamment appliquée pour
+    du raytracing sur des décors de jeux vidéo, qui permet de compresser un octree sans perte de données. Ces deux technologies peuvent par exemple
+    permettre la visualisation de certaines scènes très massives, initialement visualisable uniquement sur supercalculateur, sur des ordinateurs portables ou des téléphones.
 
     Afin de mener le projet jusqu'à son terme, je dois tout d'abord étudier et comprendre la théorie et l'implémentation des structures
     SVO/SVDAG/SSVDAG pour en évaluer les performances de rendu raytracing sur des modèles connus. Pour cela, je suis en contact
-    avec les équipes de recherche suédoise à la base du SVDAG, avec lesquels je pourrai donc collaborer.
+    avec les équipes de recherche suédoise de L'Université technique de Chalmers à la base du SVDAG, avec lesquels je pourrai donc collaborer.
 
-    D'un autre côté, je dois comprendre et maitriser la construction de structure AMR via VTK. Je dois notamment
-    savoir construire un AMR à partir d'un SVO et avoir un résultat visuel identique au SVO en entrée.
+    D'un autre côté, je dois comprendre et maîtriser la construction de structure HTG via VTK. Je dois notamment
+    savoir construire un AMR à partir d'un SVO et avoir un résultat visuel identique au SVO initial.
 
-    Une fois la phase de recherche terminée, un premier convertisseur VTK-AMR vers SVDAG/SSVDAG sera à
+    Une fois la phase de recherche terminée, un premier convertisseur VTK-HTG vers SVDAG/SSVDAG sera à
     implémenter. Des tests de performances s'en suivront afin de les comparer avec celles des autres structures.
 
     Pour finir, le travail se poursuivra par l'application de rendu réaliste de type lancé de rayons à base de SVDAG sur
-    des données issues de VTK-AMR. Plusieurs développements seront possibles en vue de prendre en compte la notion de variables ou de
+    des données issues de VTK-HTG. Plusieurs développements seront possibles en vue de prendre en compte la notion de variables ou de
     compresser encore plus les informations dans le cadre de rendu de films interactifs. Les développements effectués seront
     évalués aussi bien sur GPU (CUDA) que sur les nombreux accélérateurs et processeurs disponibles au CEA.
 
     \newpage
-    \section{Etudes menées}     %%% ETUDES MENEES %%%
+    \section{Études menées}     %%% ETUDES MENEES %%%
 
     Dans le cadre du stage, des études préliminaires étaient nécessaires afin de comprendre les structures de données que
     j'allais manipuler.
@@ -392,8 +392,8 @@ includeheadfoot,
     \subsection{Sparse Voxel Octree}
 
     Le Sparse Voxel Octree (SVO) est la structure de base à connaître afin de comprendre les autres.
-    Pour cela, je me suis basé sur la thèse de Viktor Kämpe sur le SVDAG ainsi que le papier de recherche de NVIDIA
-    Research sur le Efficient Sparse Voxel Octree (ESVO), car ils introduisent le SVO de sorte à comprendre le reste.
+    Pour cela, je me suis basé sur la thèse de Viktor Kämpe sur les SVDAG\cite{kampethesis2016} ainsi que le papier de recherche de NVIDIA
+    Research sur le Efficient Sparse Voxel Octree (ESVO)\cite{Laine2010i3d}, car ils introduisent le SVO de sorte à comprendre le reste.
 
     Le SVO est une représentation de données en arbre. Sa structure permet d'accéder à une information rapidement.
     Il est construit à partir d'une scène 3D non structurée, qui est ensuite découpée en grille dont les cases contenant un élément sont à leur tour découpées jusqu'à atteindre le niveau défini.
@@ -418,13 +418,13 @@ includeheadfoot,
 
     \subsection{Sparse Voxel Directed Acyclic Graph}
 
-    Pour le Sparse Voxel Directed Acyclic Graph (SVDAG), j'ai de nouveau utilisé la thèse de Victor Kämpe ainsi que le papier
-    "High Resolution Sparse Voxel Dags" écrit par Victor Kämpe, Erik Sintorn et Ulf Assarsson. J'ai également étudié le
+    Pour le Sparse Voxel Directed Acyclic Graph (SVDAG), j'ai de nouveau utilisé la thèse de Victor Kämpe\cite{kampethesis2016} ainsi que le papier
+    "High Resolution Sparse Voxel Dags"\cite{kampe2013sg} écrit par Victor Kämpe, Erik Sintorn et Ulf Assarsson. J'ai également étudié le
     programme qu'ils ont partagé, muni d'un jeu de donnée en exemple.
 
     Le SVDAG est un arbre de voxel compressé. Il peut être construit à partir d'un SVO.
     Sa particularité est qu'un noeud peut être pointé par plusieurs parents, évitant ainsi de stocker plusieurs noeuds s'ils sont identiques.
-    Il est également acyclic, nous pouvons descendre dans l'arbre mais pas remonter. Cela offre un gain de stockage supplémentaire en ne spécifiant pas les parents des noeuds.
+    Il est également acyclique, nous pouvons descendre dans l'arbre mais pas remonter, cela offre un gain de stockage supplémentaire.
     Tout cela permet de faire tenir en mémoire des structures trop volumineuses à la base et de rendre les accès mémoires plus rapides.
 
     \begin{figure}[H]
@@ -443,15 +443,15 @@ includeheadfoot,
         }
     \end{figure}
     \newpage
-    \subsection{Adaptive Mesh Refinement}
+    \subsection{HyperTreeGrid}
 
-    Prendre connaissance de l'Adaptive Mesh Refinement (AMR) fut plus basé sur des explications venant de
+    Prendre connaissance de l'HyperTreeGrid (HGT) fut plus basé sur des explications venant de
     Jérôme Dubois et Jacques-Bernard Lekien qui m'ont également fourni des programmes exemples. Je me suis tout de même
-    appuyé sur une présentation de Massimiliano Guarrasi, introduisant l'AMR et les outils associés.
+    appuyé sur une présentation de Massimiliano Guarrasi\cite{amr2015}, introduisant l'AMR et les outils associés.
 
-    L'AMR est un arbre semblable au SVO, à la grande différence que les voxels peuvent se situer à des niveaux différents dans l'arbre.
+    Le HTG est un arbre semblable au SVO, à la grande différence que les voxels peuvent se situer à des niveaux différents dans l'arbre.
     Ceci implique qu'une scène peut contenir des voxels plus grossiers que d'autres si un affinage n'est pas nécessaire.
-    En contrepartie, des zones peuvent être très détaillées sans allourdir la mémoire de façon excessive. \\
+    En contrepartie, des zones peuvent être très détaillées sans alourdir la mémoire de façon excessive. \\
     De plus, il est aisé de diminuer le niveau maximal des voxels pour obtenir une scène moins détaillée
     mais beaucoup plus fluide (voire en temps réel) afin de configurer rapidement les différents paramètres pour le rendu final.
 
@@ -473,16 +473,21 @@ includeheadfoot,
 
     \section{Travail réalisé}
 
-    \subsection{Prises de connaissances}
+    \subsection{Prise de connaissances}
 
     La première semaine du stage fut dédiée à la connaissance et à la compréhension des structures de données citées plus haut.
-    Pour cela, j'ai lu plusieurs papiers de recherche, de manière plus ou moins appronfondie.
+    Pour cela, j'ai lu plusieurs papiers de recherche, en me focalisant sur les parties qui m'étaient nécessaires.
 
     \subsection{Installation de l'environnement}
 
     Plusieurs semaines ont ensuite été dédiées à l'installation de l'environnement nécessaire.
-    N'ayant pas les droits d'administrateur, j'ai installé Spack en tant que gestionnaire de paquets.\\
-    J'ai ensuite installé VTK, contenant des modules pour l'AMR, et le programme SVDAG fourni, ainsi que toutes les dépendences.
+    N'ayant pas les droits d'administrateur, j'ai installé Spack, un gestionnaire de paquets pour supercalculateurs sur Linux et MacOS.
+    Il permet d'installer des paquets en une commande. Il est aussi possible de build un paquet avec plusieurs versions, configurations,
+    plateformes et compilateurs, et tous ces builds peuvent coexister sur la même machine. (voir www.spack.io)
+
+
+    J'ai ensuite installé VTK, contenant des modules pour l'AMR, et le programme SVDAG fourni, ainsi que toutes les dépendances. J'ai également
+    créé une recette Spack pour le SVDAG, permettant ainsi de l'installer avec toutes ses dépendances facilement.
 
     \subsection{Installation et fonctionnement du programme SVDAG}
 
@@ -501,6 +506,8 @@ includeheadfoot,
     paramètres. J'ai également analysé ses performances avec quelques jeux de données connus.
 
     \subsubsection{Résultats}
+
+    Les résultats ci dessous ont été obtenus avec une machine dotée de [....].
 
     \begin{figure}[H]
         \centering
@@ -560,18 +567,17 @@ includeheadfoot,
 
     Concernant le SVO, sa taille dépend du nombre de voxels, tandis que son temps de construction dépend du nombre de triangles.\\
     La taille et le temps de construction du SVDAG sont liés au nombre de voxels. De plus, sa taille dépend également de la régularité des modèles.
-    Dans notre cas, les modèles sont tous autant réguliers car la couleur est distribuée avec le même procédé.
 
     La structure du SVDAG est environ 10 fois moins volumineuse que le SVO, et les grandeurs 85\% plus légères. Ce qui donne un taux de compression total d'environ 86\%;
 
     \subsection{Présentation des résultats}
 
-    Dans le cadre de plusieurs conférences, telles que la journée de visu 2019 et Eurographics 2019, il m'a été
+    Dans le cadre de plusieurs conférences, telles que la journée Visu 2019 et Eurovis 2019, il m'a été
     demandé de faire une slide afin de montrer mon travail dans le domaine de la visualisation avec les premiers résultats obtenus.
 
     \begin{figure}[H]
         \centering{
-        \resizebox{100mm}{!}{\includegraphics{ressources/images/slide_visu.png}}
+        \resizebox{100mm}{!}{\includegraphics{ressources/images/bunny.png}}
         \label{slide_visu}
         }
     \end{figure}
@@ -588,14 +594,14 @@ includeheadfoot,
 
     \subsubsection{CEA}
 
-    Quant à VTK et à l'AMR, Jérôme Dubois et Jacques-Bernard Lekien, contributeurs à VTK, m'ont beaucoup expliqué
-    le fonctionnement de la structure AMR et sa construction, me donnant de bonnes bases pour la suite.
+    Quant à VTK et à au HTG, Jérôme Dubois et Jacques-Bernard Lekien, contributeurs à VTK, m'ont beaucoup expliqué
+    le fonctionnement de la structure HTG et sa construction, me donnant de bonnes bases pour la suite.
 
-    \subsubsection{Journée Visu2019}
+    \subsubsection{Journée Visu 2019}
 
     A l'occasion de la journée de la visualisation 2019 se déroulant à Paris le 17 mai, j'ai pu présenter mon travail
     aux personnes présentes en m'appuyant sur la slide produite. Cela a suscité l'intérêt de certains chercheurs,
-    demandant par exemple si mon travail pourrait être intégré à VTK.
+    demandant par exemple si mon travail pourrait être intégré à VTK, ou encore si de la compression temporelle serait possible.
 
 
 
@@ -606,19 +612,22 @@ includeheadfoot,
     \subsubsection{Installations}
 
     Tout d'abord, l'accès aux machines internes a pris du temps, ce qui a retardé les installations de quelques jours.
-    De plus, les restrictions de l'entreprises nous empêchant d'utiliser curl et wget comme bon nous semble, il a donc fallu créer des miroirs.
-    Utiliser Roméo pour cela était la meilleure solution. Cependant, une coupure de courant sur le campus survint au mauvais moment.
-    La seule façon de faire était de télécharger les paquets un par un via un navigateur et de les placer dans un miroir.
+    De plus, les restrictions de l'entreprises causés par le proxy nous empêchant d'utiliser curl et wget librement, il a donc fallu créer des miroirs Spack via Roméo,
+    le supercalculateur de l'Université de Reims, pour ensuiter les transférer en SSH. Cependant, cela nous exposait à des incidents externe, auxquels
+    cas il faudrait télécharger les paquets un par un via un navigateur.
 
-    Concernant VTK, l'installateur télécharge des programmes de test, ce qui bloquait tout. Et les télécharger à la main n'était
-    pas envisageable étant donné leur grand nombre. Nous avons donc attendu le retour de Roméo pour les télécharger puis les transférer en ssh.
-    \\De plus, l'installation de VTK pour python est en option, ce que je ne savais pas, et les programmes d'exemples qui m'étaient
-    donnés étaient en python. Après plusieurs heures de recherches sur l'importation de VTK (car je pensais toujours que VTK python était installé),
+    Concernant VTK, des données de référence de test étaient téléchargées durant la compilation, faisant planter une cible de la compilation à cause du proxy.
+    Une solution envisagée était de les télécharger sur Roméo puis de les transférer en SSH, mais nous avons décidé de désactiver le téléchargement
+    des tests. Au final, une solution pour le proxy nous a été proposée, nous permettant de télécharger via curl depuis la plupart des sources.
+
+    De plus, l'installation de VTK pour python est en option, ce que je ne savais pas, et les programmes d'exemples qui m'étaient
+    donnés, issues de TPs faits à Reims pour les Master 2 CHPS, étaient en python. Après plusieurs heures de recherches sur l'importation de VTK
+    (car je pensais toujours que VTK python était installé),
     j'ai fini par restranscrire les exemples en C++, ce qui m'a permis au passage de comprendre les différentes étapes.
 
     \subsubsection{SVDAG}
 
-    Le problème de compatibilité expliqué plus haut m'a également pris beaucoup de temps. En effet, en plus du paquet dépendant au système,
+    Le problème de compatibilité Windows - Unix expliqué plus haut m'a également pris beaucoup de temps. En effet, en plus du paquet dépendant au système,
     l'appel d'une fonction template externe ne passait pas à la compilation. Les solutions sur internet liées à l'erreur
     retournée ne parlant que de la fonction en elle-même et non de son appel, j'ai du en partie comprendre les types des
     paramètres donnés (qui étaient des vecteurs très complexes) afin de trouver la source du problème.
@@ -630,14 +639,15 @@ includeheadfoot,
     \section{Travaux futurs}
 
     Durant le reste du stage, mon travail consistera dans un premier temps à prendre connaissance du SSVDAG, pour le
-    comparer avec le SVDAG et voir quel est le plus intéressant. Ensuite, je devrai maitriser la structure VTK-AMR en créant un
-    AMR à partir d'un SVO en obtenant le même résultat, pour par la suite faire un convertisseur AMR vers SVDAG/SSVDAG.
-    Ensuite, des rendus seront faits à partir de données AMR afin d'évaluer les performances et les améliorations possibles.
+    comparer avec le SVDAG et voir quel est le plus intéressant. Ensuite, je devrai maîtriser la structure VTK-HTG en créant un
+    HTG à partir d'un SVO en obtenant le même résultat, pour par la suite faire un convertisseur AMR vers SVDAG/SSVDAG.
+    Ensuite, des rendus seront faits à partir de données plus riches que celles utilisées jusqu'à présent afin d'évaluer les performances et
+    les améliorations possibles.
 
     \section{Conclusion}                            %%% CONCLUSION %%%
 
     Manipuler des structures de données complexes demande beaucoup de recherches préliminaires. De plus, certains
-    problèmes m'ont fait perdre beaucoup de temps. De ce fait, rien de concret n'a encore été implémenté.\\
+    problèmes m'ont fait perdre beaucoup de temps.\\
     Cependant, les résultats obtenus sont encourageants pour la suite. La familiarisation avec l'environnement de travail
     me permet désormais de travailler plus efficacement qu'au début du stage.
 
