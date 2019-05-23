@@ -18,9 +18,18 @@
 \usepackage{parskip}
 \usepackage{float}
 \usepackage{enumitem}
+\usepackage{hyperref}
 
 \newcommand{\hsp}{\hspace{20pt}}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\definecolor{blue}{RGB}{25,25,180}
+
+ \hypersetup{
+ colorlinks=true,
+ breaklinks=false,
+ urlcolor=blue,
+ }
 
 \usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 
@@ -70,7 +79,7 @@ includeheadfoot,
                     \begin{flushleft}
                         \Large Auteur: \textsc{Antoine Roche}\\
                         Tuteur de stage: \textsc{Jérôme Dubois}\\
-                        Tuteur enseignant : \textsc{Mickael Krajecki}\\
+                        Tuteur enseignant : \textsc{Michael Krajecki}\\
                     \end{flushleft}
                 \end{minipage}
 
@@ -83,12 +92,28 @@ includeheadfoot,
         \end{sffamily}
     \end{titlepage}
 
-\newpage
+    \newpage
     \section*{Remerciements}
 
     Je tiens à remercier Jérôme Dubois et Jacques-Bernard Lekien pour leur aide précieuse, ainsi que l'occasion d'avoir participé
     à la VISU2019 pour présenter mon travail et prendre connaissance de celui d'autres chercheurs dans le milieu de la visualisation.
     Je remercie également Michael Krajecki pour m'avoir donné l'opportunité de travailler au sein du CEA.
+
+
+    \newpage
+
+    \section*{Glossaire}                             %%% GLOSSAIRE %%%
+    \noindent
+    \textbf{CPU} : Central Processing Unit \\
+    \textbf{GPU} : Graphics Processing Unit \\
+    \textbf{CUDA} : Compute Unified Device Architecture \\
+    \textbf{VTK} : Visualization ToolKit \\
+    \textbf{SVO} : Sparse Voxel Octree \\
+    \textbf{DAG} : Directed Acyclic Graph \\
+    \textbf{SVDAG} : Sparse Voxel DAG \\
+    \textbf{SSVDAG} : Symmetry-aware Sparse Voxel DAG \\
+    \textbf{AMR} : Adaptive Mesh Refinement \\
+    \textbf{CEA} : Commissariat à l'Energie Atomique \\
 
 
     \newpage
@@ -366,7 +391,7 @@ includeheadfoot,
 
     Le Sparse Voxel Octree (SVO) est la structure de base à connaître afin de comprendre les autres.
     Pour cela, je me suis basé sur la thèse de Viktor Kämpe sur le SVDAG ainsi que le papier de recherche de NVIDIA
-    Research sur le ESVO, car ils introduisent le SVO de sorte à comprendre le reste.
+    Research sur le Efficient Sparse Voxel Octree (ESVO), car ils introduisent le SVO de sorte à comprendre le reste.
 
     Le SVO est une représentation de données en arbre. Sa structure permet d'accéder à une information rapidement.
     Il est construit à partir d'une scène 3D non structurée, qui est ensuite découpée en grille dont les cases contenant un élément sont à leur tour découpées jusqu'à atteindre le niveau défini.
@@ -444,7 +469,7 @@ includeheadfoot,
         }
     \end{figure}
 
-\section{Travail réalisé}
+    \section{Travail réalisé}
 
     \subsection{Prises de connaissances}
 
@@ -552,9 +577,9 @@ includeheadfoot,
     \section{Expérience personnelle et professionnelle}
     \subsection{Collaboration et contribution}
 
-    \subsubsection{Université de Chamblers}
+    \subsubsection{Université de Chalmers}
 
-    Afin de comprendre certaines choses sur le SVDAG, j'ai sollicité Dan Dolonius et Ulf Assarsson, deux chercheurs de l'Université de Chamblers à l'origine du SVDAG.
+    Afin de comprendre certaines choses sur le SVDAG, j'ai sollicité Dan Dolonius et Ulf Assarsson, deux chercheurs de l'Université de Chalmers à l'origine du SVDAG.
     La collaboration n'a pas beaucoup abouti, j'ai cependant eu l'occasion des les renseigner sur la compatibilité vers Unix.\\
     De plus, le programme fourni est une ancienne version de ce qu'ils possèdent actuellement, et en avoir une plus récente
     nous permettrait beaucoup plus de choses.
@@ -616,8 +641,7 @@ includeheadfoot,
     d'expérience chaque jour, m'encourageant d'avantage à mener ce projet à son terme.
 
     \newpage
-    \section{Glossaire}                             %%% GLOSSAIRE %%%
-    Obligatoire dans le rapport
+
 
 
     \newpage
