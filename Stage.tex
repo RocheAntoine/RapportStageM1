@@ -11,7 +11,6 @@
 \usepackage{color}
 \usepackage{fancybox}
 \usepackage[T1]{fontenc}
-% \usepackage{hangcaption}
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
@@ -24,12 +23,14 @@
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 \definecolor{blue}{RGB}{25,25,180}
+\definecolor{darkred}{RGB}{140,5,5}
 
- \hypersetup{
- colorlinks=true,
- breaklinks=false,
- urlcolor=blue,
- }
+\hypersetup{
+colorlinks=true,
+breaklinks=false,
+urlcolor=blue,
+linkcolor=darkred,
+}
 
 \usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 
@@ -95,9 +96,10 @@ includeheadfoot,
     \newpage
     \section*{Remerciements}
 
-    Je tiens à remercier Jérôme Dubois et Jacques-Bernard Lekien pour leur aide précieuse, ainsi que l'occasion d'avoir participé
+    Je tiens à remercier le personnel du CEA, pour son aide et son accueil.\\
+    Je remercie aussi Jérôme Dubois et Jacques-Bernard Lekien pour leur aide précieuse, ainsi que l'opportunité de participer
     à la VISU2019 pour présenter mon travail et prendre connaissance de celui d'autres chercheurs dans le milieu de la visualisation.
-    Je remercie également Michael Krajecki pour m'avoir donné l'opportunité de travailler au sein du CEA.
+    Je remercie également Michael Krajecki pour m'avoir donné la chance de travailler au sein du CEA.
 
 
     \newpage
@@ -621,6 +623,9 @@ includeheadfoot,
     retournée ne parlant que de la fonction en elle-même et non de son appel, j'ai du en partie comprendre les types des
     paramètres donnés (qui étaient des vecteurs très complexes) afin de trouver la source du problème.
 
+    De plus, le code est fourni sans documentation ni commentaires, ce qui m'a donné quelques difficultés pour
+    comprendre son fonctionnement.
+
     \newpage
     \section{Travaux futurs}
 
@@ -629,7 +634,6 @@ includeheadfoot,
     AMR à partir d'un SVO en obtenant le même résultat, pour par la suite faire un convertisseur AMR vers SVDAG/SSVDAG.
     Ensuite, des rendus seront faits à partir de données AMR afin d'évaluer les performances et les améliorations possibles.
 
-    \newpage
     \section{Conclusion}                            %%% CONCLUSION %%%
 
     Manipuler des structures de données complexes demande beaucoup de recherches préliminaires. De plus, certains
