@@ -118,6 +118,8 @@ includeheadfoot,
     \textbf{AMR} : Adaptive Mesh Refinement \\
     \textbf{HTG} : HyperTreeGrid \\
     \textbf{CEA} : Commissariat à l'Énergie Atomique et aux Énergies Alternatives\\
+    \textbf{Voxel} : Volume Element\\
+
 
 
     \newpage
@@ -449,7 +451,7 @@ includeheadfoot,
     Jérôme Dubois et Jacques-Bernard Lekien qui m'ont également fourni des programmes exemples. Je me suis tout de même
     appuyé sur une présentation de Massimiliano Guarrasi\cite{amr2015}, introduisant l'AMR et les outils associés.
 
-    Le HTG est un arbre semblable au SVO, à la grande différence que les voxels peuvent se situer à des niveaux différents dans l'arbre.
+    Le HTG est une grille d'arbres semblables au SVO, à la grande différence que les voxels peuvent se situer à des niveaux différents dans l'arbre.
     Ceci implique qu'une scène peut contenir des voxels plus grossiers que d'autres si un affinage n'est pas nécessaire.
     En contrepartie, des zones peuvent être très détaillées sans alourdir la mémoire de façon excessive. \\
     De plus, il est aisé de diminuer le niveau maximal des voxels pour obtenir une scène moins détaillée
@@ -457,20 +459,13 @@ includeheadfoot,
 
     \begin{figure}[H]
         \centering{
-        \resizebox{100mm}{!}{\input{ressources/inkscape/amr_grille1.pdf_tex} \space \space \input{ressources/inkscape/amr_arbre1.pdf_tex}}
+        \resizebox{150mm}{!}{\includegraphics{ressources/images/presentation/htg.png}}
         \caption{Grille de type AMR de niveau 3 avec son arbre associé}
         \label{fig:amr1}
         }
     \end{figure}
 
-    \begin{figure}[H]
-        \centering{
-        \resizebox{100mm}{!}{\input{ressources/inkscape/amr_grille2.pdf_tex} \space \space \input{ressources/inkscape/amr_arbre2.pdf_tex}}
-        \caption{Grille de type AMR de niveau 2 avec son arbre associé}
-        \label{fig:amr2}
-        }
-    \end{figure}
-
+    \newpage
     \section{Travail réalisé}
 
     \subsection{Prise de connaissances}
@@ -585,9 +580,9 @@ includeheadfoot,
     \section{Expérience personnelle et professionnelle}
     \subsection{Collaboration et contribution}
 
-    \subsubsection{Université de Chalmers}
+    \subsubsection{Université technique de Chalmers}
 
-    Afin de comprendre certaines choses sur le SVDAG, j'ai sollicité Dan Dolonius et Ulf Assarsson, deux chercheurs de l'Université de Chalmers à l'origine du SVDAG.
+    Afin de comprendre certaines choses sur le SVDAG, j'ai sollicité Dan Dolonius et Ulf Assarsson, deux chercheurs de l'Université technique de Chalmers à l'origine du SVDAG.
     La collaboration n'a pas beaucoup abouti, j'ai cependant eu l'occasion des les renseigner sur la compatibilité vers Unix.\\
     De plus, le programme fourni est une ancienne version de ce qu'ils possèdent actuellement, et en avoir une plus récente
     nous permettrait beaucoup plus de choses.
